@@ -1,0 +1,45 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+}
+
+group = 'info.itsthesky'
+version = '0.1'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url 'https://jitpack.io' }
+    maven { url 'https://maven.enginehub.org/repo/' }
+}
+
+dependencies {
+    implementation 'org.spigotmc:spigot-api:1.13-R0.1-SNAPSHOT'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation (group: 'com.github.SkriptLang', name: 'Skript', version: '2.5.3') {
+        exclude group: 'com.sk89q.worldguard', module: 'worldguard-legacy'
+        exclude group: 'net.milkbowl.vault', module: 'Vault'
+    }
+    compile group: 'com.sun.net.httpserver', name: 'http', version: '20070405'
+}
+
+jar {
+    archiveName 'WebSky ' + version + ".jar"
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+compileJava.options.encoding = 'UTF-8'

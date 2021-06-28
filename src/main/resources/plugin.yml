@@ -1,0 +1,16 @@
+name: WebSky
+version: @version@
+main: info.itsthesky.websky.WebSky
+api-version: 1.16
+prefix: WebSky
+load: STARTUP
+softdepend: [ Skript ]
+authors: [ ItsTheSky ]
+description: Skript addon which allow you to make a web server and inrect with it using Skript.
+commands:
+    websky:
+        aliases:
+            - ws
+            - websk
+            - skhtml
+        permission: websky.command
